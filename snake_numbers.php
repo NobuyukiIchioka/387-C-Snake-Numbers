@@ -2,24 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LとRを入力</title>
-    <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css"> -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<h1>ヘビ数の計算</h1>
+    <h1>ヘビ数の計算</h1>
     <p>10以上の整数LとRを入力してください。</p>
-    <form id="snakeForm">
-        <label for="L">L: </label>
-        <input type="number" id="L" name="L" min="10" required>
+    <form method="post">
+        <label for="L">Lを入力してください:</label>
+        <input type="number" id="L" name="L" required>
         <br>
-        <label for="R">R: </label>
-        <input type="number" id="R" name="R" min="10" required>
+        <label for="R">Rを入力してください:</label>
+        <input type="number" id="R" name="R" required>
         <br>
-        <button type="submit">計算する</button>
+        <button type="submit">送信</button>
     </form>
-    <p id="output"></p>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
