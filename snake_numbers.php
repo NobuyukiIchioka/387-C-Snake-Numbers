@@ -24,12 +24,51 @@
         $L = intval($_POST['L']);
         $R = intval($_POST['R']);
 
-        // 入力が正しい場合の確認用（デバッグ用）
-        echo "L = $L, R = $R<br>";
+        // カウンターと配列の初期化
+        $C = 0;
+        $S = [];
 
+        // LからRまで１つづつ増やす
         for ($i = $L; $i <= $R; $i++) {
+            // 計算する数の宣言（デバック）
             echo $i . "<br>";
+            // 空の配列を用意
+            $Y = [];
+            // 計算してiの数が変わるといけないので、numに移す
+            $num = $i;
+            // 10で割れなくなるまで繰り返す
+            while ($num >= 10) {
+                // 10で割った余りを格納
+                $Y[] = $num % 10;
+                // 10で割った整数部分だけ格納
+                $num = intval($num / 10);
+            }
+            // 最後の余りを格納
+            $Y[] = $num;
+            // 格納されたものの確認（デバック）
+            echo "Y = [" . implode(", ", $Y) . "]<br>";
+
+            
+
+            $isSnakeNumber = true;
+            for ($j = 0; $j < count($Y) - 1; $j++) {
+                if ($Y[$j] >= $Y[count($Y) - 1]) {
+                    $isSnakeNumber = false;
+                    break;
+                }
+            }
+             // 結果の出力（デバッグ用）
+             echo $isSnakeNumber ? "これはヘビ数です" : "これはヘビ数ではありません";
+             echo "<br><br>";
+
+            // ヘビ数の場合、配列Sに格納しカウンターを増やす
+            if ($isSnakeNumber) {
+                $S[] = $i;
+                $C++;
+            }
         }
+        // ヘビ数の個数と数値を出力
+        echo "ヘビ数は、{$C}個。" . implode(" ", $S) . "です。";
     }
     ?>
 </body>
