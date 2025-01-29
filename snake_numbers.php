@@ -2,36 +2,78 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LとRを入力</title>
-    <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css"> -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<h1>ヘビ数の計算</h1>
+    <h1>ヘビ数の計算</h1>
     <p>10以上の整数LとRを入力してください。</p>
-    <form id="snakeForm">
-        <label for="L">L: </label>
-        <input type="number" id="L" name="L" min="10" required>
+    <form method="post">
+        <label for="L">Lを入力してください:</label>
+        <input type="number" id="L" name="L" min="10" max="1000000000000000000" required>
         <br>
-        <label for="R">R: </label>
-        <input type="number" id="R" name="R" min="10" required>
+        <label for="R">Rを入力してください:</label>
+        <input type="number" id="R" name="R" min="10" max="1000000000000000000" required>
         <br>
-        <button type="submit">計算する</button>
+        <button type="submit">送信</button>
     </form>
-    <p id="output"></p>
 
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $L = intval($_POST['L']);
         $R = intval($_POST['R']);
-
-        // 入力が正しい場合の確認用（デバッグ用）
-        echo "L = $L, R = $R<br>";
-
-        for ($i = $L; $i <= $R; $i++) {
-            echo $i . "<br>";
+        // LがRより大きい場合はエラーを出力して処理を中断
+        if ($L > $R) {
+            echo "エラー: Lの値はRの値より小さくしてください。";
+            exit;
         }
+
+        // カウンターと配列の初期化
+        $C = 0;
+        $S = [];
+
+        // LからRまで１つづつ増やす
+        for ($i = $L; $i <= $R; $i++) {
+            // 計算する数の宣言（デバック）
+            echo $i . "<br>";
+            // 空の配列を用意
+            $Y = [];
+            // 計算してiの数が変わるといけないので、numに移す
+            $num = $i;
+            // 10で割れなくなるまで繰り返す
+            while ($num >= 10) {
+                // 10で割った余りを格納
+                $Y[] = $num % 10;
+                // 10で割った整数部分だけ格納
+                $num = intval($num / 10);
+            }
+            // 最後の余りを格納
+            $Y[] = $num;
+            // 格納されたものの確認（デバック）
+            echo "Y = [" . implode(", ", $Y) . "]<br>";
+
+            
+
+            $isSnakeNumber = true;
+            for ($j = 0; $j < count($Y) - 1; $j++) {
+                if ($Y[$j] >= $Y[count($Y) - 1]) {
+                    $isSnakeNumber = false;
+                    break;
+                }
+            }
+             // 結果の出力（デバッグ用）
+             echo $isSnakeNumber ? "これはヘビ数です" : "これはヘビ数ではありません";
+             echo "<br><br>";
+
+            // ヘビ数の場合、配列Sに格納しカウンターを増やす
+            if ($isSnakeNumber) {
+                $S[] = $i;
+                $C++;
+            }
+        }
+        // ヘビ数の個数と数値を出力
+        echo "LからRまでのヘビ数は、{$C}個。<br>" . implode(" ", $S) . " です。";
     }
     ?>
 </body>
