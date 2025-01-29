@@ -11,10 +11,10 @@
     <p>10以上の整数LとRを入力してください。</p>
     <form method="post">
         <label for="L">Lを入力してください:</label>
-        <input type="number" id="L" name="L" required>
+        <input type="number" id="L" name="L" min="10" max="1000000000000000000" required>
         <br>
         <label for="R">Rを入力してください:</label>
-        <input type="number" id="R" name="R" required>
+        <input type="number" id="R" name="R" min="10" max="1000000000000000000" required>
         <br>
         <button type="submit">送信</button>
     </form>
@@ -23,6 +23,11 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $L = intval($_POST['L']);
         $R = intval($_POST['R']);
+        // LがRより大きい場合はエラーを出力して処理を中断
+        if ($L > $R) {
+            echo "エラー: Lの値はRの値より小さくしてください。";
+            exit;
+        }
 
         // カウンターと配列の初期化
         $C = 0;
@@ -68,7 +73,7 @@
             }
         }
         // ヘビ数の個数と数値を出力
-        echo "ヘビ数は、{$C}個。" . implode(" ", $S) . "です。";
+        echo "LからRまでのヘビ数は、{$C}個。<br>" . implode(" ", $S) . " です。";
     }
     ?>
 </body>
