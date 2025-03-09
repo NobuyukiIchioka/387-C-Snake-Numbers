@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>LとRを入力</title>
+    <title>ヘビ数</title>
     <!-- <link rel="stylesheet" href="https://unpkg.com/ress@5.0.2/dist/ress.min.css"> -->
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -25,7 +25,7 @@
         $R = intval($_POST['R']);
         // LがRより大きい場合はエラーを出力して処理を中断
         if ($L > $R) {
-            echo "エラー: Lの値はRの値より小さくしてください。";
+            echo "エラー: RはLより大きくしてください。";
             exit;
         }
 
@@ -36,7 +36,7 @@
         // LからRまで１つづつ増やす
         for ($i = $L; $i <= $R; $i++) {
             // 計算する数の宣言（デバック）
-            echo $i . "<br>";
+            echo $i , "<br>";
             // 空の配列を用意
             $Y = [];
             // 計算してiの数が変わるといけないので、numに移す
@@ -74,7 +74,7 @@
         }
         // ヘビ数の個数と数値を出力
         echo "LからRまでのヘビ数は、{$C}個。<br>" . implode(" ", $S) . " です。";
-    }
+    }// if終わり
     ?>
 </body>
 </html>
