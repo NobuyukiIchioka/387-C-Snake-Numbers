@@ -47,21 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // デバック
         echo "num = {$num} <br>";
 
-        // numを10で割り続け、あまりをdigitsに格納（数字が10以上まで繰り返す）
+        // numを10で割り続け、あまりをdigitsに格納（数字が1以上まで繰り返す）
         while ($n >= 1) {
             $digits[] = $n % 10; // 10で割った余りを格納
             $n = (int)($n / 10);// 10で割った整数部分だけ格納。（これにより次の桁に移動する）
         }
 
         // デバック
-        echo "digits = ";
-        print_r($digits);
-        echo "<br>";
-
-        // echo "digits = ".;
-        // print_r($digits);
-        // echo "<br>";
-
+        echo "digits = ".print_r($digits, true). "<br>";
 
         $flag = true;
         for($i = 0; $i < count($digits) - 1; $i++){
@@ -83,9 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "ヘビ数(先頭の桁が最大)<br>";
         }
         
-        
         echo "<br>";
-
     }
 
     // 結果の出力（フォーマット：ヘビ数は、count個。snakeNums1 snakeNums2 ... です。）
